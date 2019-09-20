@@ -1,0 +1,40 @@
+package config_test
+
+import (
+	"os"
+	"testing"
+
+	"github.com/tj/assert"
+
+	"github.com/tj/go-config"
+)
+
+// Config struct.
+type Config struct {
+	Name  string `json:"name"`
+	Email string `json:"email"`
+}
+
+// Test saving.
+func TestSave(t *testing.T) {
+	err := config.Save("/tmp/some.json", Config{
+		Name:  "tj",
+		Email: "tj@apex.sh",
+	})
+	assert.NoError(t, err)
+}
+
+// Test loading valid config.
+func TestLoad_valid(t *testing.T) {
+	var c Config
+	err := config.Load("/tmp/some.json", &c)
+	assert.NoError(t, err)
+	assert.Equal(t, "tj", c.Name)
+}
+
+// Test loading missing config.
+func TestLoad_missing(t *testing.T) {
+	var c Config
+	err := config.Load("/tmp/nope.json", &c)
+	assert.True(t, os.IsNotExist(err))
+}

@@ -38,3 +38,20 @@ func TestLoad_missing(t *testing.T) {
 	err := config.Load("/tmp/nope.json", &c)
 	assert.True(t, os.IsNotExist(err))
 }
+
+// Test saving in home.
+func TestSaveHome(t *testing.T) {
+	err := config.SaveHome("some.json", Config{
+		Name:  "tj",
+		Email: "tj@apex.sh",
+	})
+	assert.NoError(t, err)
+}
+
+// Test loading valid config in home.
+func TestLoadHome_valid(t *testing.T) {
+	var c Config
+	err := config.LoadHome("some.json", &c)
+	assert.NoError(t, err)
+	assert.Equal(t, "tj", c.Name)
+}

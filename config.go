@@ -4,6 +4,8 @@ package config
 import (
 	"encoding/json"
 	"io/ioutil"
+	"os"
+	"path/filepath"
 )
 
 // Load configuration from path, into the struct pointer provided.
@@ -24,4 +26,24 @@ func Save(path string, v interface{}) error {
 	}
 
 	return ioutil.WriteFile(path, b, 0600)
+}
+
+// LoadHome loads configuration from path relative to the user home directory.
+func LoadHome(path string, v interface{}) error {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return err
+	}
+
+	return Load(filepath.Join(home, path), v)
+}
+
+// SaveHome saves configuration to path relative to the user home directory.
+func SaveHome(path string, v interface{}) error {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return err
+	}
+
+	return Save(filepath.Join(home, path), v)
 }

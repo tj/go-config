@@ -18,8 +18,13 @@ func Load(path string, v interface{}) error {
 	return json.Unmarshal(b, v)
 }
 
-// Save saves configuration to path.
+// Save saves configuration to path. If the directory does not exist, it is created.
 func Save(path string, v interface{}) error {
+	err := os.MkdirAll(filepath.Dir(path), 0755)
+	if err != nil {
+		return err
+	}
+
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err

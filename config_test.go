@@ -17,7 +17,7 @@ type Config struct {
 
 // Test saving.
 func TestSave(t *testing.T) {
-	err := config.Save("/tmp/some.json", Config{
+	err := config.Save("/tmp/whatever/some.json", Config{
 		Name:  "tj",
 		Email: "tj@apex.sh",
 	})
@@ -27,7 +27,7 @@ func TestSave(t *testing.T) {
 // Test loading valid config.
 func TestLoad_valid(t *testing.T) {
 	var c Config
-	err := config.Load("/tmp/some.json", &c)
+	err := config.Load("/tmp/whatever/some.json", &c)
 	assert.NoError(t, err)
 	assert.Equal(t, "tj", c.Name)
 }

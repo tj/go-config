@@ -1,7 +1,6 @@
 package config_test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/tj/assert"
@@ -36,7 +35,7 @@ func TestLoad_valid(t *testing.T) {
 func TestLoad_missing(t *testing.T) {
 	var c Config
 	err := config.Load("/tmp/nope.json", &c)
-	assert.True(t, os.IsNotExist(err))
+	assert.NoError(t, err)
 }
 
 // Test saving in home.

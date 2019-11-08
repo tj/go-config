@@ -8,9 +8,15 @@ import (
 	"path/filepath"
 )
 
-// Load configuration from path, into the struct pointer provided.
+// Load configuration from path, into the struct pointer provided. No error is returned
+// if the file does not exist.
 func Load(path string, v interface{}) error {
 	b, err := ioutil.ReadFile(path)
+
+	if os.IsNotExist(err) {
+		return nil
+	}
+
 	if err != nil {
 		return err
 	}

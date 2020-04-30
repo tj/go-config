@@ -31,7 +31,7 @@ func Save(path string, v interface{}) error {
 		return err
 	}
 
-	b, err := json.Marshal(v)
+	b, err := json.MarshalIndent(v, "", "  ")
 	if err != nil {
 		return err
 	}
